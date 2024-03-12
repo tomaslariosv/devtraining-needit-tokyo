@@ -3,23 +3,23 @@
         <active>true</active>
         <consumes>application/json</consumes>
         <consumes_customized>false</consumes_customized>
-        <default_operation_uri>/api/x_58872_needit/needit_api/nigetinfo/{user_id}</default_operation_uri>
+        <default_operation_uri/>
         <enforce_acl>cf9d01d3e73003009d6247e603f6a990</enforce_acl>
         <http_method>GET</http_method>
-        <name>ni_getinfo</name>
+        <name>get_incidents_by company</name>
         <operation_script><![CDATA[(function process(/*RESTAPIRequest*/ request, /*RESTAPIResponse*/ response) {
   
   // implement resource here
   
   
   // Get value from the user_id path parameter passed in the URL
-  var requestUser = request.pathParams.user_id;
+  var requestUser = request.pathParams.company_id;
   // Get value of the demo_query query parameter passed in the URL
   var requestDemoQuery = request.queryParams.demo_query;
   
   // Query the sys_user table to get the user record for the user passed in
   // the user_id path parameter
-  var requestUserName = new GlideRecord('sys_user');
+  var requestUserName = new GlideRecord('core_company');
   requestUserName.get(requestUser);
   
   // Aggregation 1: Incident table
@@ -27,7 +27,7 @@
   // parameter is the Caller.
   var userIncidentCount = new GlideAggregate('incident');
   userIncidentCount.addAggregate('COUNT');
-  userIncidentCount.addQuery('caller_id',requestUser);
+  userIncidentCount.addQuery('company',requestUser);
   userIncidentCount.addEncodedQuery(requestDemoQuery);
   userIncidentCount.query();
   
@@ -42,7 +42,7 @@
   // parameter is the Requested by.
   var userChangeCount = new GlideAggregate('change_request');
   userChangeCount.addAggregate('COUNT');
-  userChangeCount.addQuery('requested_by',requestUser);
+  userChangeCount.addQuery('company',requestUser);
   userChangeCount.addEncodedQuery(requestDemoQuery);
   userChangeCount.query();
   
@@ -57,7 +57,7 @@
   // parameter is the Opened by.
   var userProblemCount = new GlideAggregate('problem');
   userProblemCount.addAggregate('COUNT');
-  userProblemCount.addQuery('opened_by',requestUser);
+  userProblemCount.addQuery('company',requestUser);
   userProblemCount.addEncodedQuery(requestDemoQuery);
   userProblemCount.query();
   
@@ -72,35 +72,35 @@
     body.numInc = incidents;
     body.numChg = changes;
     body.numPrb = problems;
-    body.user = {"User name": requestUserName.user_name,
-      "User ID": requestUser};
+    body.user = {"Company name": requestUserName.name,
+      "User Company": requestUserName.sys_id};
       
   // Send the response object, which is returned to the requestor, to the body object.
   response.setBody(body);
       
   })(request, response);]]></operation_script>
-        <operation_uri>/api/x_58872_needit/v2/needit_api/nigetinfo/{user_id}</operation_uri>
+        <operation_uri>/api/x_58872_needit/v1/needit_api/{company_id}</operation_uri>
         <produces>application/json,application/xml,text/xml</produces>
         <produces_customized>false</produces_customized>
-        <relative_path>/nigetinfo/{user_id}</relative_path>
+        <relative_path>/{company_id}</relative_path>
         <request_example/>
         <requires_acl_authorization>true</requires_acl_authorization>
         <requires_authentication>true</requires_authentication>
         <requires_snc_internal_role>true</requires_snc_internal_role>
-        <short_description>Find the active NeedIT records for a user. Group by What neede</short_description>
+        <short_description/>
         <sys_class_name>sys_ws_operation</sys_class_name>
         <sys_created_by>admin</sys_created_by>
-        <sys_created_on>2024-03-08 17:53:41</sys_created_on>
-        <sys_id>1bb4184e473086109f8d82c2e36d4316</sys_id>
+        <sys_created_on>2024-03-11 22:56:52</sys_created_on>
+        <sys_id>a6c6b84747fc8a109f8d82c2e36d4360</sys_id>
         <sys_mod_count>9</sys_mod_count>
-        <sys_name>ni_getinfo</sys_name>
+        <sys_name>get_incidents_by company</sys_name>
         <sys_package display_value="NeedIt" source="x_58872_needit">6ead8e780f603200cd674f8ce1050ed1</sys_package>
         <sys_policy/>
         <sys_scope display_value="NeedIt">6ead8e780f603200cd674f8ce1050ed1</sys_scope>
-        <sys_update_name>sys_ws_operation_1bb4184e473086109f8d82c2e36d4316</sys_update_name>
+        <sys_update_name>sys_ws_operation_a6c6b84747fc8a109f8d82c2e36d4360</sys_update_name>
         <sys_updated_by>admin</sys_updated_by>
-        <sys_updated_on>2024-03-12 00:31:20</sys_updated_on>
+        <sys_updated_on>2024-03-12 00:07:06</sys_updated_on>
         <web_service_definition display_value="NeedIt API">fb605c0a473086109f8d82c2e36d43be</web_service_definition>
-        <web_service_version display_value="v2">9a05c043473c8a109f8d82c2e36d4388</web_service_version>
+        <web_service_version display_value="v1">3124448b47b88a109f8d82c2e36d43ea</web_service_version>
     </sys_ws_operation>
 </record_update>
