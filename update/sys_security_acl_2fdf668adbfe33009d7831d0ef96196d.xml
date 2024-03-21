@@ -5,9 +5,11 @@
         <advanced>true</advanced>
         <condition/>
         <description/>
+        <local_or_existing/>
         <name>x_58872_needit_needit</name>
         <operation display_value="create">create</operation>
         <script><![CDATA[current.isNewRecord();]]></script>
+        <security_attribute/>
         <sys_class_name>sys_security_acl</sys_class_name>
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2019-07-24 01:39:21</sys_created_on>
